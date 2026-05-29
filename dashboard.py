@@ -34,6 +34,14 @@ st.set_page_config(
 # ── CSS ──────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
+/* ── Hide Streamlit Cloud toolbar: fork / view-source / GitHub links ── */
+#MainMenu                        { visibility: hidden !important; }
+header[data-testid="stHeader"]   { visibility: hidden !important; height: 0 !important; }
+[data-testid="stToolbar"]        { display: none !important; }
+[data-testid="stDecoration"]     { display: none !important; }
+[data-testid="stDeployButton"]   { display: none !important; }
+footer                           { visibility: hidden !important; }
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 .hero {
