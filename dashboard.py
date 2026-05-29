@@ -981,53 +981,80 @@ with tabs[6]:
             st.plotly_chart(fig_comp, use_container_width=True)
 
         with col_c2:
+            # Build year list with explicit int conversion so the filter is
+            # type-safe regardless of whether the slim CSV loaded years as
+            # int64 or float32.
+            years_avail = sorted(
+                [int(y) for y in comp_df["reporting_year"].unique()],
+                reverse=True
+            )
+
+            # Key includes the company name so each company gets its own
+            # fresh selectbox state — prevents stale year selection when
+            # switching between companies.
+            sel_year = st.selectbox(
+                "Select reporting year:",
+                years_avail,
+                key=f"comp_year_{sel_company}"
+            )
+
+            # Title updates dynamically with the selected year
             chart_header(
-                "Scope 3 Category Breakdown (latest year)",
+                f"Scope 3 Category Breakdown — {sel_year}",
                 "Understanding the category breakdown",
                 "Each row is one of the 15 GHG Protocol Scope 3 categories. "
                 "The columns show:\n\n"
-                "- **Relevancy State** — What the company said about this category: "
-                "'Relevant' (reports it), 'Not relevant' (active dismissal), "
-                "'Not evaluated' or 'Silent' (suspicious non-response)\n"
-                "- **Primary Data %** — If reported, what share uses real supplier data\n"
+                "- **State** — What the company said: "
+                "'🟢 Relevant' (reported), '🟡 Not relevant' (active dismissal), "
+                "'🔴 Not evaluated' or '⚫ Silent' (no response — suspicious)\n"
+                "- **Primary Data %** — Share of the calculation backed by real supplier data\n"
                 "- **Method Disclosed** — Did the company describe how it calculated this?\n"
-                "- **Emissions (tCO₂e)** — The reported emissions volume\n\n"
-                "Look for rows where the company is 'Silent' or 'Not evaluated' for "
-                "categories that peers typically report as Relevant."
+                "- **Emissions (tCO₂e)** — Reported volume for that category\n\n"
+                "**Why does the table sometimes look the same across years?** "
+                "Large mature reporters (e.g. major utilities) often keep the same "
+                "relevancy designations year after year. Look at the Emissions column "
+                "for year-on-year numerical changes."
             )
-            years_avail = sorted(comp_df["reporting_year"].tolist(), reverse=True)
-            sel_year = st.selectbox("Reporting year:", years_avail, key="comp_year")
-            row = comp_df[comp_df["reporting_year"] == sel_year].iloc[0]
 
-            cat_rows = []
-            for i in range(1, 16):
-                c = f"c{i}"
-                rel  = row.get(f"s3_ghgp_{c}_emissions_relevancy", "—")
-                pdv  = row.get(f"s3_ghgp_{c}_emissions_primary_data", np.nan)
-                emv  = row.get(f"total_s3_ghgp_{c}_emissions_ghg", np.nan)
-                meth = row.get(f"disclose_s3_ghgp_{c}_emissions_method_bool", False)
+            # Filter to exactly the selected year
+            sel_row_df = comp_df[comp_df["reporting_year"].astype(int) == sel_year]
+            if sel_row_df.empty:
+                st.warning(f"No data found for {sel_year}.")
+            else:
+                row = sel_row_df.iloc[0]
+                cat_rows = []
+                for i in range(1, 16):
+                    c = f"c{i}"
+                    rel  = row.get(f"s3_ghgp_{c}_emissions_relevancy", "—")
+                    pdv  = row.get(f"s3_ghgp_{c}_emissions_primary_data", np.nan)
+                    emv  = row.get(f"total_s3_ghgp_{c}_emissions_ghg", np.nan)
+                    meth = row.get(f"disclose_s3_ghgp_{c}_emissions_method_bool", False)
+                    rel_icon = {"Relevant": "🟢", "Not relevant": "🟡",
+                                "Not evaluated": "🔴", "Silent": "⚫"}.get(str(rel), "❓")
+                    cat_rows.append({
+                        "Category": f"C{i}: {list(CAT_NAMES.values())[i-1][4:]}",
+                        "State": f"{rel_icon} {rel}",
+                        "Primary Data (%)": f"{pdv:.0f}%" if pd.notna(pdv) else "—",
+                        "Method Disclosed": "✅" if meth else "—",
+                        "Emissions (tCO₂e)": f"{emv:,.0f}" if pd.notna(emv) else "—",
+                    })
+                st.dataframe(pd.DataFrame(cat_rows), use_container_width=True, height=460)
 
-                # Colour-code relevancy state
-                rel_icon = {"Relevant": "🟢", "Not relevant": "🟡",
-                            "Not evaluated": "🔴", "Silent": "⚫"}.get(rel, "❓")
-                cat_rows.append({
-                    "Category": f"C{i}: {list(CAT_NAMES.values())[i-1][4:]}",
-                    "State": f"{rel_icon} {rel}",
-                    "Primary Data (%)": f"{pdv:.0f}%" if pd.notna(pdv) else "—",
-                    "Method Disclosed": "✅" if meth else "—",
-                    "Emissions (tCO₂e)": f"{emv:,.0f}" if pd.notna(emv) else "—",
-                })
-            st.dataframe(pd.DataFrame(cat_rows), use_container_width=True, height=460)
-
-        # SDQI sub-scores for latest year
+        # SDQI sub-scores — track the selected year, not always the latest
         st.divider()
+        sel_row_df2 = comp_df[comp_df["reporting_year"].astype(int) == sel_year]
+        score_row = sel_row_df2.iloc[0] if not sel_row_df2.empty else latest
+        score_year_label = sel_year if not sel_row_df2.empty else int(latest["reporting_year"])
+
+        st.markdown(f"**SDQI sub-scores for {score_year_label}** "
+                    f"(change the year selector above to compare across years)")
         m1c, m2c, m3c, m4c = st.columns(4)
         with m1c:
-            st.metric("SDQI Score",         f"{latest['sdqi_basic']:.3f}")
+            st.metric("SDQI Score",         f"{score_row['sdqi_basic']:.3f}")
         with m2c:
-            st.metric("Completeness Score", f"{latest['completeness_score']:.3f}")
+            st.metric("Completeness Score", f"{score_row['completeness_score']:.3f}")
         with m3c:
-            st.metric("Primary Data Ratio", f"{latest['primary_data_ratio']:.3f}")
+            st.metric("Primary Data Ratio", f"{score_row['primary_data_ratio']:.3f}")
         with m4c:
-            mdr_val = latest.get("method_disclosure_rate", np.nan)
+            mdr_val = score_row.get("method_disclosure_rate", np.nan)
             st.metric("Method Disclosure Rate", f"{mdr_val:.3f}" if pd.notna(mdr_val) else "—")
