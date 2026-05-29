@@ -912,12 +912,94 @@ with tabs[5]:
 # ────────────────────────────────────────────────────────────────────────────
 with tabs[6]:
     section_intro(
-        "Search for a specific company to see its complete Scope 3 reporting history: "
-        "SDQI trajectory, how it compares to sector peers, which categories it reports, "
-        "and whether it has started verifying its emissions."
+        "Use the filters below to narrow down companies by sector, industry, country, or "
+        "verification status — then select a company to see its full Scope 3 reporting history."
     )
 
-    unique_cos = sorted(df["company_name"].dropna().unique())
+    # ── Cascading filters ────────────────────────────────────────────────────
+    # Filters are cascading: each one narrows the options available to the next.
+    # Leaving a filter blank means "show all".
+
+    filter_df = df.copy()  # working copy, progressively narrowed
+
+    # Row 1: Sector | Sub-sector (industry) | Country | Region
+    fc1, fc2, fc3, fc4 = st.columns(4)
+
+    with fc1:
+        all_sectors = sorted([s for s in filter_df["sics_sector"].dropna().unique()
+                               if s != "Information Not Available"])
+        sel_sectors = st.multiselect("Sector", all_sectors, placeholder="All sectors")
+        if sel_sectors:
+            filter_df = filter_df[filter_df["sics_sector"].isin(sel_sectors)]
+
+    with fc2:
+        all_industries = sorted([i for i in filter_df["sics_industry"].dropna().unique()
+                                  if str(i) not in ("nan", "Information Not Available", "")])
+        sel_industries = st.multiselect("Industry / Sub-sector", all_industries,
+                                        placeholder="All industries")
+        if sel_industries:
+            filter_df = filter_df[filter_df["sics_industry"].isin(sel_industries)]
+
+    with fc3:
+        all_countries = sorted(filter_df["jurisdiction_clean"].dropna().unique())
+        sel_countries = st.multiselect("Country", all_countries, placeholder="All countries")
+        if sel_countries:
+            filter_df = filter_df[filter_df["jurisdiction_clean"].isin(sel_countries)]
+
+    with fc4:
+        all_regions = sorted(filter_df["region"].dropna().unique())
+        sel_regions = st.multiselect("Region", all_regions, placeholder="All regions")
+        if sel_regions:
+            filter_df = filter_df[filter_df["region"].isin(sel_regions)]
+
+    # Row 2: Verification status | SDQI range | Reset button
+    fv1, fv2, fv3 = st.columns([1, 2, 1])
+
+    with fv1:
+        ver_options = ["All", "Verified only", "Unverified only"]
+        sel_ver = st.selectbox("Verification", ver_options, key="expl_ver")
+        if sel_ver == "Verified only":
+            filter_df = filter_df[filter_df["emissions_verified"] == True]
+        elif sel_ver == "Unverified only":
+            filter_df = filter_df[filter_df["emissions_verified"] == False]
+
+    with fv2:
+        sdqi_min_val = float(filter_df["sdqi_basic"].min()) if not filter_df.empty else 0.0
+        sdqi_max_val = float(filter_df["sdqi_basic"].max()) if not filter_df.empty else 1.0
+        if sdqi_min_val < sdqi_max_val:
+            sdqi_range = st.slider(
+                "SDQI score range",
+                min_value=0.0, max_value=1.0,
+                value=(round(sdqi_min_val, 2), round(sdqi_max_val, 2)),
+                step=0.01, key="expl_sdqi"
+            )
+            filter_df = filter_df[
+                (filter_df["sdqi_basic"] >= sdqi_range[0]) &
+                (filter_df["sdqi_basic"] <= sdqi_range[1])
+            ]
+
+    with fv3:
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("🔄 Reset all filters", use_container_width=True):
+            st.rerun()
+
+    # Company count feedback
+    matched_companies = filter_df["company_name"].dropna().unique()
+    n_matched = len(matched_companies)
+    total_companies = df["company_name"].dropna().nunique()
+    if n_matched == total_companies:
+        st.caption(f"Showing all {n_matched:,} companies — use filters above to narrow down.")
+    elif n_matched == 0:
+        st.warning("No companies match the current filters. Try broadening your selection.")
+        st.stop()
+    else:
+        st.caption(f"✅ **{n_matched:,}** companies match your filters  "
+                   f"(out of {total_companies:,} total)")
+
+    st.divider()
+
+    # Company selectbox — only shows filtered companies
+    unique_cos = sorted(matched_companies)
     sel_company = st.selectbox("🔍 Search / select a company:", unique_cos)
     comp_df = df[df["company_name"] == sel_company].sort_values("reporting_year")
 
