@@ -1,0 +1,30 @@
+# Raw data file — keep local only (66.8 MB, not for GitHub)
+cdu_global_all_data.csv
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local secrets / env
+.env
+*.env

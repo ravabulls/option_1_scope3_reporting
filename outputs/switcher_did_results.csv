@@ -1,0 +1,2 @@
+estimator,coefficient,std_error,p_value,r_squared,n_obs,n_switchers,n_never_ver,interpretation
+"DiD (Within-Company Demean + Year FE, Clustered SE)",0.23858727263238846,0.0074903892711098066,1.217279954632338e-222,0.23650572223197586,23066,7967,19206,"Switching to verified is associated with a +0.2386 change in SDQI (p=0.0000), controlling for company-level fixed effects and the global year trend."

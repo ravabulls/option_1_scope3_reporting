@@ -1,0 +1,47 @@
+Thesis Option 1 (Recommended First)
+"How Companies Report Scope 3 Emissions: A Large-Scale Analysis of Completeness, Category Relevance, and Method Quality in Corporate Carbon Disclosures"
+Method: Quantitative panel data analysis (descriptive statistics, regression, cross-tabulation)
+Data: CDU Global — 33,681 disclosures × 15 Scope 3 categories × relevancy + primary data fields
+Timeline: Achievable in 4–5 months
+
+Abstract
+
+Scope 3 emissions — upstream and downstream activities not directly controlled by the reporting firm — represent the largest and most uncertain component of corporate carbon footprints, yet remain the least systematically analyzed in empirical research. This thesis uses the full CDP disclosure dataset (33,681 corporate disclosures, 2018–2023) to provide the first large-scale empirical analysis of Scope 3 reporting behavior across industries, jurisdictions, and time. For each of the 15 GHG Protocol Scope 3 categories, it analyzes (1) which categories companies classify as relevant, (2) what proportion of relevant categories are backed by primary data versus secondary/spend-based estimates, and (3) whether this mix of method quality predicts systematic under- or over-statement of total Scope 3 emissions. The study introduces a Scope 3 Disclosure Quality Index (SDQI) constructed from category completeness, primary data ratios, and year-over-year consistency. Using panel regression with sector and year fixed effects, the thesis tests whether organizational boundary choice, third-party verification, and sector affiliation predict SDQI scores. The findings provide empirical grounding for simulation-based models of carbon accounting error, inform the design of CSRD-compliant Scope 3 reporting frameworks, and offer managers a benchmarking tool to assess their Scope 3 disclosure quality against sector peers.
+
+Research Questions
+
+RQ1 — Which Scope 3 categories do companies systematically classify as irrelevant, and does this pattern differ by sector and jurisdiction in ways that suggest strategic omission rather than genuine non-materiality?
+RQ2 — What proportion of Scope 3 disclosures rely on primary data versus secondary/spend-based estimation per category, and how does this vary across sectors and reporting years?
+RQ3 — Does third-party verification of emissions and organizational boundary choice predict higher Scope 3 disclosure quality (completeness and consistency)?
+How You Would Do It
+
+Step 1 — Data preparation (3 weeks): Load CDU global CSV (already downloaded, 66.8 MB). Clean and standardize: extract the 15 Scope 3 relevancy fields (s3_ghgp_c1_emissions_relevancy through s3_ghgp_c15_emissions_relevancy) and the primary data flags (s3_ghgp_c1_emissions_primary_data etc.). Filter EU companies for a sub-analysis. This is straightforward Python/pandas.
+
+Step 2 — Construct SDQI (2 weeks): Build a simple index per company-year: number of relevant categories disclosed / total plausible categories for that sector + weighted bonus for primary data use. No external data needed. This is an original contribution.
+
+Step 3 — Descriptive analysis (3 weeks): Cross-tabulations by sector, year, jurisdiction. Which categories are most frequently marked irrelevant? Which use primary data? Do relevancy patterns change after CSRD announcement (2022)? Heat maps, bar charts — manageable in Python (matplotlib/seaborn) or R.
+
+Step 4 — Regression (3 weeks): Panel OLS or ordered logit. Dependent variable: SDQI score or continuous completeness ratio. Independent variables: org_boundary_approach, disclose_verif_emissions_bool, sics_sector, jurisdiction, year dummies. Fixed effects at sector × year level.
+
+Step 5 — Write-up (5 weeks): Standard MBA thesis structure: introduction, literature review (Scope 3 uncertainty, GHG Protocol, CSRD), methodology, results, discussion, managerial implications.
+
+Why this fits Stella's PhD:
+Stella's simulation currently covers Scope 1 and 2 only; she explicitly says Scope 3 is a "future extension." Your thesis would provide the empirical calibration data she needs: actual Scope 3 magnitude distributions by category and sector, actual primary vs secondary data ratios, and a documented pattern of category omissions — exactly the inputs her simulation model requires. The joint paper writes itself: "Scope 3 Carbon Accounting Errors: Empirical Patterns and Simulation Implications."
+
+Career relevance: Every company implementing CSRD right now needs exactly this analysis. Consultants, assurance firms (Deloitte, PwC ESG practice), and sustainability departments are building Scope 3 programs. You would have direct, quantified benchmarks.
+
+Positives:
+
+Largest dataset (33,681 records) — statistically robust, hard to dismiss
+No complex crosswalk or matching needed
+Directly actionable under CSRD (supply chain reporting mandates)
+Clear calibration value to Stella's simulation
+Strong joint publication path
+15 Scope 3 categories = rich multi-dimensional analysis
+SDQI index is an original methodological contribution
+Negatives:
+
+No external benchmark (no EUTL equivalent for Scope 3) — you cannot verify accuracy, only consistency and completeness
+"Primary data flag" is a binary field, not a measure of data quality
+SDQI construction involves subjective weighting choices — must be transparent and sensitivity-tested
+Scope 3 omission could reflect genuine non-materiality (a chemical company may genuinely have no Category 13 Downstream Leased Assets) — sector-specific benchmarking needed to separate strategic from genuine

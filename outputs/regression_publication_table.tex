@@ -1,0 +1,70 @@
+\begin{table}[htbp]
+  \centering
+  \caption{Scope 3 SDQI Regression Analysis — Clustered Standard Errors}
+  \label{tab:sdqi_regressions}
+  \begin{tabular}{lcccc}
+    \hline\hline
+    Variable & (1) Global Basic & (2) Panel Cohort & (3) EU Subsample & (4) Known Sectors \\
+    \hline
+    Intercept (Coef) & 0.0805$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.2508$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.1147$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0489$^{*}$ \\
+     & (0.0075) & (0.0095) & (0.0177) & (0.0277) \\
+    C(boundary\_approach\_clean, Treatment(reference='Not Disclosed')) Equity Share (Coef) & 0.0401$^{$^{*}$$^{*}$}$ & 0.0300 & 0.0514 & 0.0422 \\
+     & (0.0183) & (0.0185) & (0.0451) & (0.0333) \\
+    C(boundary\_approach\_clean, Treatment(reference='Not Disclosed')) Financial Control (Coef) & 0.0396$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0292$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0454$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0655$^{$^{$^{*}$$^{*}$}$$^{*}$}$ \\
+     & (0.0077) & (0.0085) & (0.0155) & (0.0195) \\
+    C(boundary\_approach\_clean, Treatment(reference='Not Disclosed')) Operational Control (Coef) & 0.0398$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0332$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0436$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0718$^{$^{$^{*}$$^{*}$}$$^{*}$}$ \\
+     & (0.0053) & (0.0066) & (0.0122) & (0.0185) \\
+    C(boundary\_approach\_clean, Treatment(reference='Not Disclosed')) Other / Hybrid (Coef) & -0.0061 & -0.0016 & -0.0264 & 0.0427 \\
+     & (0.0159) & (0.0168) & (0.0357) & (0.0305) \\
+    C(emissions\_verified) True (Coef) & 0.3516$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.2481$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.3677$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.3356$^{$^{$^{*}$$^{*}$}$$^{*}$}$ \\
+     & (0.0060) & (0.0057) & (0.0134) & (0.0090) \\
+    C(sics\_sector, Treatment(reference='Information Not Available')) Consumer Goods (Coef) & 0.0430$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0339$^{$^{*}$$^{*}$}$ & 0.0482 &  \\
+     & (0.0157) & (0.0143) & (0.0312) &  \\
+    C(sics\_sector, Treatment(reference='Information Not Available')) Extractives & Minerals Processing (Coef) & 0.0127 & 0.0033 & 0.0451 &  \\
+     & (0.0163) & (0.0144) & (0.0338) &  \\
+    C(sics\_sector, Treatment(reference='Information Not Available')) Financials (Coef) & 0.1126$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0705$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.1105$^{$^{$^{*}$$^{*}$}$$^{*}$}$ &  \\
+     & (0.0145) & (0.0129) & (0.0264) &  \\
+    C(sics\_sector, Treatment(reference='Information Not Available')) Food & Beverage (Coef) & 0.0578$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0419$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0281 &  \\
+     & (0.0163) & (0.0146) & (0.0328) &  \\
+    C(sics\_sector, Treatment(reference='Information Not Available')) Health Care (Coef) & 0.0426$^{$^{*}$$^{*}$}$ & 0.0185 & 0.0265 &  \\
+     & (0.0205) & (0.0185) & (0.0393) &  \\
+    C(sics\_sector, Treatment(reference='Information Not Available')) Infrastructure (Coef) & 0.0702$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0560$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0923$^{$^{$^{*}$$^{*}$}$$^{*}$}$ &  \\
+     & (0.0127) & (0.0115) & (0.0221) &  \\
+    C(sics\_sector, Treatment(reference='Information Not Available')) Renewable Resources & Alternative Energy (Coef) & 0.0762$^{$^{*}$$^{*}$}$ & 0.0714$^{$^{*}$$^{*}$}$ & 0.0592 &  \\
+     & (0.0308) & (0.0298) & (0.0531) &  \\
+    C(sics\_sector, Treatment(reference='Information Not Available')) Resource Transformation (Coef) & 0.0182 & 0.0065 & 0.0031 &  \\
+     & (0.0111) & (0.0102) & (0.0205) &  \\
+    C(sics\_sector, Treatment(reference='Information Not Available')) Services (Coef) & 0.0940$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0752$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0663$^{$^{*}$$^{*}$}$ &  \\
+     & (0.0182) & (0.0167) & (0.0325) &  \\
+    C(sics\_sector, Treatment(reference='Information Not Available')) Technology & Communications (Coef) & 0.0633$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0519$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0692$^{$^{$^{*}$$^{*}$}$$^{*}$}$ &  \\
+     & (0.0122) & (0.0112) & (0.0257) &  \\
+    C(sics\_sector, Treatment(reference='Information Not Available')) Transportation (Coef) & 0.0608$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0426$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0630$^{*}$ &  \\
+     & (0.0161) & (0.0149) & (0.0328) &  \\
+    C(region, Treatment(reference='Rest\_of\_World')) China (Coef) & -0.0038 & -0.0190$^{$^{*}$$^{*}$}$ &  & -0.0316 \\
+     & (0.0067) & (0.0076) &  & (0.0228) \\
+    C(region, Treatment(reference='Rest\_of\_World')) EU-27 (Coef) & 0.0400$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0358$^{$^{$^{*}$$^{*}$}$$^{*}$}$ &  & 0.0373$^{$^{$^{*}$$^{*}$}$$^{*}$}$ \\
+     & (0.0065) & (0.0067) &  & (0.0111) \\
+    C(region, Treatment(reference='Rest\_of\_World')) Japan (Coef) & 0.0413$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0394$^{$^{$^{*}$$^{*}$}$$^{*}$}$ &  & 0.0209 \\
+     & (0.0090) & (0.0090) &  & (0.0131) \\
+    C(region, Treatment(reference='Rest\_of\_World')) United States (Coef) & 0.0573$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0470$^{$^{$^{*}$$^{*}$}$$^{*}$}$ &  & 0.0220 \\
+     & (0.0073) & (0.0076) &  & (0.0150) \\
+    company\_size\_proxy (Coef) & 0.0125$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0121$^{$^{$^{*}$$^{*}$}$$^{*}$}$ & 0.0095$^{$^{*}$$^{*}$}$ & 0.0289$^{$^{$^{*}$$^{*}$}$$^{*}$}$ \\
+     & (0.0015) & (0.0019) & (0.0040) & (0.0041) \\
+    \hline
+    \multicolumn{5}{l}{\textbf{Fixed Effects}} \\
+    \hline
+    Sector FE & No & No & No & Yes \\
+    Year FE & Yes & Yes & Yes & Yes \\
+    Region FE & No & No & No & No \\
+    SE Type & Clustered (company) & Clustered (company) & Clustered (company) & Clustered (company) \\
+    \hline
+    \multicolumn{5}{l}{\textbf{Diagnostics}} \\
+    \hline
+    Observations & 33681 & 20507 & 6577 & 11953 \\
+    R-squared & 0.3273 & 0.2817 & 0.3952 & 0.3152 \\
+    Adj. R-squared & 0.3268 & 0.2808 & 0.3932 & 0.3137 \\
+    F-statistic & 424.47 & 272.88 & 169.70 & 147.97 \\
+    \hline\hline
+    \multicolumn{5}{l}{$^{***}$ p$<$0.01, $^{**}$ p$<$0.05, $^{*}$ p$<$0.10. Standard errors clustered at company level.} \\
+  \end{tabular}
+\end{table}

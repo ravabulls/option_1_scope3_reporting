@@ -1,0 +1,49 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             sdqi_panel   R-squared:                       0.282
+Model:                            OLS   Adj. R-squared:                  0.281
+Method:                 Least Squares   F-statistic:                     272.9
+Date:                Fri, 29 May 2026   Prob (F-statistic):               0.00
+Time:                        21:33:35   Log-Likelihood:                -899.18
+No. Observations:               20507   AIC:                             1850.
+Df Residuals:                   20481   BIC:                             2057.
+Df Model:                          25                                         
+Covariance Type:              cluster                                         
+================================================================================================================================================================================
+                                                                                                                   coef    std err          z      P>|z|      [0.025      0.975]
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Intercept                                                                                                        0.2508      0.010     26.355      0.000       0.232       0.269
+C(boundary_approach_clean, Treatment(reference='Not Disclosed'))[T.Equity Share]                                 0.0300      0.018      1.622      0.105      -0.006       0.066
+C(boundary_approach_clean, Treatment(reference='Not Disclosed'))[T.Financial Control]                            0.0292      0.009      3.432      0.001       0.013       0.046
+C(boundary_approach_clean, Treatment(reference='Not Disclosed'))[T.Operational Control]                          0.0332      0.007      4.990      0.000       0.020       0.046
+C(boundary_approach_clean, Treatment(reference='Not Disclosed'))[T.Other / Hybrid]                              -0.0016      0.017     -0.094      0.925      -0.035       0.031
+C(emissions_verified)[T.True]                                                                                    0.2481      0.006     43.192      0.000       0.237       0.259
+C(sics_sector, Treatment(reference='Information Not Available'))[T.Consumer Goods]                               0.0339      0.014      2.377      0.017       0.006       0.062
+C(sics_sector, Treatment(reference='Information Not Available'))[T.Extractives & Minerals Processing]            0.0033      0.014      0.229      0.819      -0.025       0.032
+C(sics_sector, Treatment(reference='Information Not Available'))[T.Financials]                                   0.0705      0.013      5.468      0.000       0.045       0.096
+C(sics_sector, Treatment(reference='Information Not Available'))[T.Food & Beverage]                              0.0419      0.015      2.865      0.004       0.013       0.071
+C(sics_sector, Treatment(reference='Information Not Available'))[T.Health Care]                                  0.0185      0.018      1.003      0.316      -0.018       0.055
+C(sics_sector, Treatment(reference='Information Not Available'))[T.Infrastructure]                               0.0560      0.012      4.860      0.000       0.033       0.079
+C(sics_sector, Treatment(reference='Information Not Available'))[T.Renewable Resources & Alternative Energy]     0.0714      0.030      2.395      0.017       0.013       0.130
+C(sics_sector, Treatment(reference='Information Not Available'))[T.Resource Transformation]                      0.0065      0.010      0.638      0.523      -0.013       0.026
+C(sics_sector, Treatment(reference='Information Not Available'))[T.Services]                                     0.0752      0.017      4.509      0.000       0.043       0.108
+C(sics_sector, Treatment(reference='Information Not Available'))[T.Technology & Communications]                  0.0519      0.011      4.631      0.000       0.030       0.074
+C(sics_sector, Treatment(reference='Information Not Available'))[T.Transportation]                               0.0426      0.015      2.868      0.004       0.013       0.072
+C(reporting_year)[T.2020]                                                                                       -0.0150      0.004     -3.571      0.000      -0.023      -0.007
+C(reporting_year)[T.2021]                                                                                       -0.0011      0.005     -0.227      0.820      -0.010       0.008
+C(reporting_year)[T.2022]                                                                                        0.0986      0.005     19.693      0.000       0.089       0.108
+C(reporting_year)[T.2023]                                                                                        0.1401      0.008     17.631      0.000       0.125       0.156
+C(region, Treatment(reference='Rest_of_World'))[T.China]                                                        -0.0190      0.008     -2.503      0.012      -0.034      -0.004
+C(region, Treatment(reference='Rest_of_World'))[T.EU-27]                                                         0.0358      0.007      5.312      0.000       0.023       0.049
+C(region, Treatment(reference='Rest_of_World'))[T.Japan]                                                         0.0394      0.009      4.396      0.000       0.022       0.057
+C(region, Treatment(reference='Rest_of_World'))[T.United States]                                                 0.0470      0.008      6.172      0.000       0.032       0.062
+company_size_proxy                                                                                               0.0121      0.002      6.302      0.000       0.008       0.016
+==============================================================================
+Omnibus:                      196.408   Durbin-Watson:                   1.423
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              126.366
+Skew:                          -0.007   Prob(JB):                     3.63e-28
+Kurtosis:                       2.616   Cond. No.                         71.1
+==============================================================================
+
+Notes:
+[1] Standard Errors are robust to cluster correlation (cluster)
