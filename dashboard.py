@@ -1013,7 +1013,7 @@ with tabs[6]:
         # Info card
         latest = comp_df.iloc[-1]
         st.markdown(f"""
-<div style='background:#f0f4f8; border-radius:10px; padding:1rem 1.4rem;
+<div style='background:#f0f4f8; color:#1e3d59; border-radius:10px; padding:1rem 1.4rem;
      border-left:5px solid #1e3d59; margin-bottom:1.2rem;'>
   <b>Sector:</b> {comp_sector} &nbsp;|&nbsp;
   <b>Country:</b> {comp_region} &nbsp;|&nbsp;
